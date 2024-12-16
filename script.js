@@ -38,3 +38,16 @@ function operate(leftNum, operator, rightNum) {
       return `Invalid operator`;
   }
 }
+
+
+const buttons = document.querySelectorAll('button');
+const inputDisplay = document.querySelector('#input');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    const buttonValue = button.textContent;
+    console.log('Button clicked', buttonValue);
+    inputDisplay.value = buttonValue;
+  });
+});
+
