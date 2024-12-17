@@ -45,9 +45,8 @@ const inputDisplay = document.querySelector('#input');
 
 buttons.forEach(button => {
   button.addEventListener('click', () => {
-    const buttonValue = button.textContent;
-    console.log('Button clicked', buttonValue);
-    inputDisplay.value = buttonValue;
+    let buttonValue = button.textContent;
+    inputDisplay.value += buttonValue;
   });
 });
 
