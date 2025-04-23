@@ -21,7 +21,8 @@ body {
 header h1 {
   font-family: "Times New Roman", Times, serif;
   font-size: 3rem;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
+  padding: 10px;
 }
 
 #display input {
@@ -39,14 +40,14 @@ header h1 {
   display: flex;
 }
 #buttons button {
-  background-color: lightgray;
+  background-color: rgb(255, 255, 255);
   padding: 20px;
   flex-grow: 1;
   width: 100%;
 }
 
 #operators button {
-  background-color: rgb(255, 185, 55);
+  background-color: lightgrey;
 }
 
 #equalsDiv button {

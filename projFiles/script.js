@@ -1,43 +1,111 @@
 // Basic math functions
 
 function add(a, b) {
-  return a + b;
+  return +a + +b;
 }
 
 function subtract(a, b) {
-  return a - b;
+  return +a - +b;
 }
 
 function multiply(a, b) {
-  return a * b;
+  return +a * +b;
 }
 
 function divide(a, b) {
-  if (b === 0) return "Dont divide by zero";
-  return a / b;
+  if (b === 0) {
+    return 0;
+  }
+  return +a / +b;
 }
 
 // leftNum operator rightNum
 let leftNum;
-let operator;
+let total = 0;
 let rightNum;
 
 // Function to calculate operation
-function operate(operator) {
+function operate(operator, leftNum, rightNum) {
   switch (operator) {
     case "+":
-      add(leftNum, rightNum);
-      break;
+      console.log("here");
+      return add(leftNum, rightNum);
     case "-":
-      subtract(leftNum, rightNum);
-      break;
+      return subtract(leftNum, rightNum);
     case "*":
-      multiply(leftNum, rightNum);
-      break;
+      return multiply(leftNum, rightNum);
     case "/":
-      divide(leftNum, rightNum);
-      break;
+      return divide(leftNum, rightNum);
     default:
       console.log("Invalid operator");
   }
 }
+
+let operatorCount = 0;
+let dotCount = 0;
+let currOperator = "";
+const operateBtn = document.querySelector("#equals");
+const display = document.querySelector("#display-box");
+const clearBtn = document.querySelector("#clear");
+const digits = document.querySelectorAll(".digits");
+const operators = document.querySelectorAll("#operators");
+
+clearBtn.addEventListener("click", () => {
+  display.value = "";
+  operatorCount = 0;
+  dotCount = 0;
+  document.getElementById("dot").disabled = false;
+});
+
+// operator clicks
+operators.forEach((operator) => {
+  operator.addEventListener("click", (e) => {
+    currOperator = e.target.textContent;
+    document.getElementById("dot").disabled = false;
+    if (operatorCount === 0) {
+      display.value += " ";
+      display.value += e.target.textContent;
+      display.value += " ";
+      operatorCount++;
+      dotCount = 0;
+    } else {
+      // left off here -> find out how to make it so that consecutive operator clicks dont mess everything up
+      const finalOperationO = display.value;
+      let operationSplit = finalOperationO.split(currOperator);
+
+      let left = operationSplit[0];
+      let right = operationSplit[1];
+      console.log(left);
+      display.value = operate(currOperator, left, right);
+    }
+  });
+});
+
+// event listener for each digit to append to display
+digits.forEach((digit) => {
+  digit.addEventListener("click", (e) => {
+    if (e.target.textContent === "." && dotCount == 0) {
+      dotCount++;
+      document.getElementById("dot").disabled = true;
+    }
+    display.value += e.target.textContent;
+  });
+});
+
+// equals button calculate total
+operateBtn.addEventListener("click", (e) => {
+  document.getElementById("dot").disabled = false;
+  operatorCount--;
+  const finalOperation = display.value;
+  let operationSplit = finalOperation.split(currOperator);
+
+  let left = operationSplit[0];
+  let right = operationSplit[1];
+
+  if (+right === 0 && currOperator === "/") {
+    display.value = "Don't divide by zero dummy";
+  } else {
+    total = operate(currOperator, left, right);
+    display.value = total;
+  }
+});
