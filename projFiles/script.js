@@ -62,21 +62,13 @@ operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
     currOperator = e.target.textContent;
     document.getElementById("dot").disabled = false;
-    if (operatorCount === 0) {
+    e.target.disabled = false;
+    if (operatorCount != 1) {
       display.value += " ";
       display.value += e.target.textContent;
       display.value += " ";
       operatorCount++;
       dotCount = 0;
-    } else {
-      // left off here -> find out how to make it so that consecutive operator clicks dont mess everything up
-      const finalOperationO = display.value;
-      let operationSplit = finalOperationO.split(currOperator);
-
-      let left = operationSplit[0];
-      let right = operationSplit[1];
-      console.log(left);
-      display.value = operate(currOperator, left, right);
     }
   });
 });
@@ -93,19 +85,22 @@ digits.forEach((digit) => {
 });
 
 // equals button calculate total
-operateBtn.addEventListener("click", (e) => {
+operateBtn.addEventListener("click", () => {
   document.getElementById("dot").disabled = false;
+
   operatorCount--;
+
   const finalOperation = display.value;
   let operationSplit = finalOperation.split(currOperator);
 
   let left = operationSplit[0];
   let right = operationSplit[1];
-
-  if (+right === 0 && currOperator === "/") {
-    display.value = "Don't divide by zero dummy";
-  } else {
-    total = operate(currOperator, left, right);
-    display.value = total;
+  if (!(operatorCount <= -1)) {
+    if (+right === 0 && currOperator === "/") {
+      display.value = "Don't divide by zero dummy";
+    } else {
+      total = operate(currOperator, left, right);
+      display.value = total;
+    }
   }
 });
